@@ -67,11 +67,11 @@
 
         const me = Players.getMe ();
 
-        if ( me && this.id === me.id ) {
+        //if ( me && this.id === me.id ) {
 
           update ( this.rot );
 
-        }
+        //}
 
       };
 
