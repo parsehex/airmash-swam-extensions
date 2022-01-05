@@ -56,7 +56,7 @@
 
     $laserPointer = $('#laser-pointer');
 
-    SWAM.one ( 'playerAdded', Player => {
+    SWAM.on ( 'playerAdded', Player => {
 
       const proto = Object.getPrototypeOf ( Player ),
             prev = proto.update;
@@ -67,11 +67,11 @@
 
         const me = Players.getMe ();
 
-        //if ( me && this.id === me.id ) {
+        if ( me && this.id === me.id ) {
 
           update ( this.rot );
 
-        //}
+        }
 
       };
 
