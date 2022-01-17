@@ -6,7 +6,7 @@ My [AirMash](https://airma.sh) extensions for [SWAM](https://github.com/Molesmal
 
 ### Auto Say Typing
 
-Install URL: `https://rawgit.com/fabiospampinato/airmash-swam-extensions/master/extensions/auto_say_typing.js`
+Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/auto_say_typing.js`
 
 Automatically say "Typing..." while typing.
 
@@ -14,19 +14,19 @@ It adds a delay between messages, in order to avoid getting throttled.
 
 You might find problems with this if you send very long messages.
 
-![Auto Say Typing](https://raw.githubusercontent.com/fabiospampinato/airmash-swam-extensions/master/resources/typing.png)
+![Auto Say Typing](https://parsehex.github.io/airmash-swam-extensions/resources/typing.png)
 
 ### Flag Borders
 
-Install URL: `https://rawgit.com/fabiospampinato/airmash-swam-extensions/master/extensions/flag_borders.js`
+Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/flag_borders.js`
 
 Show borders around your window whenever a flag is being carried.
 
-![Flag Borders](https://raw.githubusercontent.com/fabiospampinato/airmash-swam-extensions/master/resources/flag_borders.png)
+![Flag Borders](https://parsehex.github.io/airmash-swam-extensions/resources/flag_borders.png)
 
 ### Laser Pointer
 
-Install URL: `https://rawgit.com/fabiospampinato/airmash-swam-extensions/master/extensions/laser_pointer.js`
+Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/laser_pointer.js`
 
 Add a laser pointer to your spaceship!
 
@@ -36,7 +36,7 @@ Usage: use `p` for toggling the laser.
 
 ### Minimap Cycle
 
-Install URL: `https://rawgit.com/fabiospampinato/airmash-swam-extensions/master/extensions/minimap_cycle.js`
+Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/minimap_cycle.js`
 
 Cycle between different minimap sizes.
 
@@ -46,25 +46,25 @@ Usage: use `n` to cycle between 1x, 2x, and hidden,
 
 ### No BTR Win
 
-Install URL: `https://rawgit.com/fabiospampinato/airmash-swam-extensions/master/extensions/no_btr_win.js`
+Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/no_btr_win.js`
 
 Hide the BTR win dialog.
 
 ### No CTF Win
 
-Install URL: `https://rawgit.com/fabiospampinato/airmash-swam-extensions/master/extensions/no_ctf_win.js`
+Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/no_ctf_win.js`
 
 Hide the CTF win dialog.
 
 ### No Level Up
 
-Install URL: `https://rawgit.com/fabiospampinato/airmash-swam-extensions/master/extensions/no_level_up.js`
+Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/no_level_up.js`
 
 Hide the level up dialog.
 
 ### Toggle Elements
 
-Install URL: `https://rawgit.com/fabiospampinato/airmash-swam-extensions/master/extensions/toggle_elements.js`
+Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/toggle_elements.js`
 
 Toggle elements of the UI with a few keypresses.
 
@@ -80,7 +80,7 @@ Usage:
 
 ### Hit Circles
 
-Install URL: `https://rawgit.com/fabiospampinato/airmash-swam-extensions/master/themes/hit_circles/index.js`
+Install URL: `https://parsehex.github.io/airmash-swam-extensions//themes/hit_circles/index.js`
 
 A theme that replaces all images with their actual hit circles.
 
