@@ -12,6 +12,7 @@
           pointer-events: none;
           position: fixed;
           top: 10%;
+					right: 25%;
           border-style: solid;
           width: 10vw;
           box-sizing: border-box;
