@@ -26,6 +26,7 @@
 		const players = Object.keys(Players.getIDs()).map((id) => Players.get(id));
 		players.splice(0, 1); // remove Server
 		const me = Players.getMe();
+		if (!me) return;
 
 		let foundProws = 0;
 		for (const p of players) {
@@ -35,7 +36,7 @@
 			if (p.type === 5) foundProws++;
 		}
 
-		if (foundProws > 0) show();
+		if (foundProws > 0) show(foundProws);
 		else hide();
 	}
 
