@@ -4,17 +4,9 @@ My [AirMash](https://airma.sh) extensions for [SWAM](https://github.com/Molesmal
 
 ## Extensions
 
-### Auto Say Typing
+### Shield Timer
 
-Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/auto_say_typing.js`
-
-Automatically say "Typing..." while typing.
-
-It adds a delay between messages, in order to avoid getting throttled.
-
-You might find problems with this if you send very long messages.
-
-![Auto Say Typing](https://parsehex.github.io/airmash-swam-extensions/resources/typing.png)
+Forked from [Detect's shield timer](https://github.com/Detect/swam_extensions#shield-timer-for-ctf-v15) and changed so that is shows for your own as well as enemy base.
 
 ### Flag Borders
 
