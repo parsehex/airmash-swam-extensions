@@ -29,6 +29,7 @@
 
 		let foundProws = 0;
 		for (const p of players) {
+			if (!p.id) continue;
 			if (p.id === me.id) continue;
 			if (p.team === me.team) continue;
 			if (p.type === 5) foundProws++;
