@@ -143,28 +143,14 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		constructor() {
 			const styles = `
 				<style id='shieldTimerSwamModExtensionStyles" type='text/css'>
-					#blue-shieldInfo {
-						background-image: url(//parsehex.github.io/airmash-swam-extensions/assets/blue-shield.png);
+					#shieldInfo {
+						background-image: url(//detect.github.io/swam_extensions/assets/shield.png);
 						background-repeat: no-repeat;
 						background-size: contain;
 						display: none;
 						font-weight: 700;
 						height: 30px;
 						left: 43%;
-						line-height: 30px;
-						padding-left: 40px;
-						position: absolute;
-						top: 40px;
-						width: 30px;
-					}
-					#red-shieldInfo {
-						background-image: url(//parsehex.github.io/airmash-swam-extensions/assets/red-shield.png);
-						background-repeat: no-repeat;
-						background-size: contain;
-						display: none;
-						font-weight: 700;
-						height: 30px;
-						right: 43%;
 						line-height: 30px;
 						padding-left: 40px;
 						position: absolute;
@@ -192,29 +178,24 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		}
 
 		createShieldInfo() {
-			const bShieldInfoExists = !!$('#blue-shieldInfo').length;
-			const rShieldInfoExists = !!$('#red-shieldInfo').length;
+			const shieldInfoExists = !!$('#shieldInfo').length;
 
-			if (bShieldInfoExists || rShieldInfoExists) return false;
+			if (shieldInfoExists) return false;
 
-			const $rShieldInfo = $("<div id='red-shieldInfo'/>");
-			const $bShieldInfo = $("<div id='blue-shieldInfo'/>");
+			const $shieldInfo = $("<div id='shieldInfo'/>");
 
-			$('#gamespecific').append($bShieldInfo);
-			$('#gamespecific').append($rShieldInfo);
+			$('#gamespecific').append($shieldInfo);
 		}
 
 		hide() {
-			$('#bShieldInfo').hide();
-			$('#rShieldInfo').hide();
+			$('#shieldInfo').hide();
 		}
 
 		show() {
-			$('#bShieldInfo').show();
-			$('#rShieldInfo').show();
+			$('#shieldInfo').show();
 		}
 
-		setValue(secondsLeft, syncPlayer, flag) {
+		setValue(secondsLeft, syncPlayer) {
 			if (!secondsLeft) {
 				this.hide();
 				return;
@@ -224,7 +205,7 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 				syncPlayer !== null
 					? `${secondsLeft} (${syncPlayer.name})`
 					: secondsLeft;
-			$(`#${flag}-shieldInfo`).text(text);
+			$('#shieldInfo').text(text);
 			this.show();
 		}
 	}
@@ -326,22 +307,16 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		}
 
 		isEnemyBaseShield(shieldPosition, myTeam) {
-			switch (myTeam) {
-				case TEAMS.BLUE:
-					return this.isShieldWithin(
-						shieldPosition,
-						SHIELD.BASE_SPAWN_COORDINATES.RED
-					);
-					break;
-				case TEAMS.RED:
-					return this.isShieldWithin(
-						shieldPosition,
-						SHIELD.BASE_SPAWN_COORDINATES.BLUE
-					);
-					break;
-				default:
-					return false;
-			}
+			// return true if shield is in either baseg
+			const isRedTeamFlag = this.isShieldWithin(
+				shieldPosition,
+				SHIELD.BASE_SPAWN_COORDINATES.RED
+			);
+			const isBlueTeamFlag = this.isShieldWithin(
+				shieldPosition,
+				SHIELD.BASE_SPAWN_COORDINATES.BLUE
+			);
+			return isRedTeamFlag || isBlueTeamFlag;
 		}
 
 		shieldFoundForMob(data) {
