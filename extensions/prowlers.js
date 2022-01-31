@@ -9,7 +9,7 @@
 				#prowlers {
 					pointer-events: none;
 					position: fixed;
-					top: 30%;
+					top: 15%;
 					left: 45%;
 					border-style: solid;
 					width: 10vw;
@@ -44,7 +44,7 @@
 
 	function show(count) {
 		const el = $('#prowlers');
-		el.text(count + ' enemy prowlers');
+		el.text(`${count} enemy prowler${count > 1 ? 's' : ''}'`);
 		el.show();
 	}
 	function hide() {
