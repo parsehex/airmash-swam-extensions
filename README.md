@@ -8,6 +8,8 @@ My [AirMash](https://airma.sh) extensions for [SWAM](https://github.com/Molesmal
 
 Forked from [Detect's shield timer](https://github.com/Detect/swam_extensions#shield-timer-for-ctf-v15) and changed so that is shows for your own as well as enemy base.
 
+Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/shield-timer.js`
+
 ### Flag Borders
 
 Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/flag_borders.js`
@@ -61,10 +63,11 @@ Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/togg
 Toggle elements of the UI with a few keypresses.
 
 Usage:
-  - use `6` for toggling the chat
-  - use `7` for toggling the sidebar
-  - use `8` for toggling the leaderboard
-  - use `9` for toggling the minimap
+
+- use `6` for toggling the chat
+- use `7` for toggling the sidebar
+- use `8` for toggling the leaderboard
+- use `9` for toggling the minimap
 
 ![Clean](https://raw.githubusercontent.com/fabiospampinato/airmash-swam-extensions/master/resources/clean.png)
 
