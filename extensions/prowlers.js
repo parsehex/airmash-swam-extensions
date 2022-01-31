@@ -9,13 +9,16 @@
 				#prowlers {
 					pointer-events: none;
 					position: fixed;
-					top: 10%;
-					left: 35%;
+					top: 30%;
+					left: 45%;
 					border-style: solid;
 					width: 10vw;
 					box-sizing: border-box;
-					opacity: .75;
+					opacity: .6;
 					color: maroon;
+					background-color: pink;
+					padding: 2px;
+					text-align: center;
 				}
       </style>
     `;
