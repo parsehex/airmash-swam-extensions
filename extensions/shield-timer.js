@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*
 
 MIT Detect
@@ -8,7 +8,7 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 
 */
 
-!function() {
+!(function () {
 	// Settings
 	const DEFAULT_SETTINGS = {
 		isShieldSpawnedEnabled: true,
@@ -19,7 +19,10 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 	const settingsProvider = () => {
 		let sp = new SettingsProvider(DEFAULT_SETTINGS);
 		let section = sp.addSection('Shield Timer');
-		section.addBoolean('isShieldSpawnedEnabled', 'Show spawned shield direction/distance messages');
+		section.addBoolean(
+			'isShieldSpawnedEnabled',
+			'Show spawned shield direction/distance messages'
+		);
 
 		return sp;
 	};
@@ -30,15 +33,16 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		description: 'Adds enemy base shield spawn timer to UI.',
 		author: 'Detect',
 		version: '1.5',
-		settingsProvider: settingsProvider()
+		settingsProvider: settingsProvider(),
 	};
 
 	const KEY_CODES = {
-		TOGGLE_TIMER: 78 // 'n'
+		TOGGLE_TIMER: 78, // 'n'
 	};
 
 	const MESSAGES = {
-		SHIELD_FOUND: (shield) => `Shield found ${shield.direction} ${shield.time} seconds away.`,
+		SHIELD_FOUND: (shield) =>
+			`Shield found ${shield.direction} ${shield.time} seconds away.`,
 		TIMER_STARTED: (time) => `Started enemy shield timer at ${time}`,
 		TIMER_STOPPED: (time) => `Stopped enemy shield timer at ${time}`,
 	};
@@ -48,23 +52,23 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 			BLUE: {
 				topLeft: {
 					x: -9385,
-					y: -1560
+					y: -1560,
 				},
 				bottomRight: {
 					x: -9200,
-					y: -1400
-				}
+					y: -1400,
+				},
 			},
 			RED: {
 				topLeft: {
 					x: 8260,
-					y: -1055
+					y: -1055,
 				},
 				bottomRight: {
 					x: 8440,
-					y: -860
-				}
-			}
+					y: -860,
+				},
+			},
 		},
 		MOB_TYPE: 8,
 		POWERUP_TYPE: 1,
@@ -75,7 +79,7 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 
 	const TEAMS = {
 		BLUE: 1,
-		RED: 2
+		RED: 2,
 	};
 
 	class ShieldKeyboard {
@@ -88,9 +92,9 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		}
 
 		bindKeyUp(event) {
-			const toggleTimer = (event.keyCode === KEY_CODES.TOGGLE_TIMER);
+			const toggleTimer = event.keyCode === KEY_CODES.TOGGLE_TIMER;
 
-			if(toggleTimer) {
+			if (toggleTimer) {
 				shieldMain.toggle();
 			}
 		}
@@ -108,26 +112,26 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 
 		checkStartStop() {
 			// Minus one to prevent dupe start messages
-			const isStart = (this.secondsLeft === (SHIELD.SPAWN_SECONDS - 1));
-			const isStop = (this.secondsLeft === false);
+			const isStart = this.secondsLeft === SHIELD.SPAWN_SECONDS - 1;
+			const isStop = this.secondsLeft === false;
 			const time = new Date().toLocaleTimeString();
 
 			let message;
 
-			if(isStart) {
+			if (isStart) {
 				message = MESSAGES.TIMER_STARTED(time);
-			} else if(isStop) {
+			} else if (isStop) {
 				message = MESSAGES.TIMER_STOPPED(time);
 			}
 
-			if(!!message) UI.addChatMessage(message);
+			if (!!message) UI.addChatMessage(message);
 		}
 
 		foundShield(shield) {
-			if(!userSettings.isShieldSpawnedEnabled) return;
+			if (!userSettings.isShieldSpawnedEnabled) return;
 
 			// Too far away
-			if(shield.time > 10) return;
+			if (shield.time > 10) return;
 
 			const message = MESSAGES.SHIELD_FOUND(shield);
 
@@ -139,14 +143,28 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		constructor() {
 			const styles = `
 				<style id='shieldTimerSwamModExtensionStyles" type='text/css'>
-					#shieldInfo {
-						background-image: url(//detect.github.io/swam_extensions/assets/shield.png);
+					#blue-shieldInfo {
+						background-image: url(//parsehex.github.io/airmash-swam-extensions/assets/blue-shield.png);
 						background-repeat: no-repeat;
 						background-size: contain;
 						display: none;
 						font-weight: 700;
 						height: 30px;
 						left: 43%;
+						line-height: 30px;
+						padding-left: 40px;
+						position: absolute;
+						top: 40px;
+						width: 30px;
+					}
+					#red-shieldInfo {
+						background-image: url(//parsehex.github.io/airmash-swam-extensions/assets/red-shield.png);
+						background-repeat: no-repeat;
+						background-size: contain;
+						display: none;
+						font-weight: 700;
+						height: 30px;
+						right: 43%;
 						line-height: 30px;
 						padding-left: 40px;
 						position: absolute;
@@ -167,35 +185,46 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		}
 
 		bindListener() {
-			SWAM.on('shieldTimer:enemyShield:update shieldTimer:enemyShield:stop', this.setValue.bind(this));
+			SWAM.on(
+				'shieldTimer:enemyShield:update shieldTimer:enemyShield:stop',
+				this.setValue.bind(this)
+			);
 		}
 
 		createShieldInfo() {
-			const shieldInfoExists = !!$('#shieldInfo').length;
+			const bShieldInfoExists = !!$('#blue-shieldInfo').length;
+			const rShieldInfoExists = !!$('#red-shieldInfo').length;
 
-			if(shieldInfoExists) return false;
+			if (bShieldInfoExists || rShieldInfoExists) return false;
 
-			const $shieldInfo = $("<div id='shieldInfo'/>");
+			const $rShieldInfo = $("<div id='red-shieldInfo'/>");
+			const $bShieldInfo = $("<div id='blue-shieldInfo'/>");
 
-			$('#gamespecific').append($shieldInfo);
+			$('#gamespecific').append($bShieldInfo);
+			$('#gamespecific').append($rShieldInfo);
 		}
 
 		hide() {
-			$('#shieldInfo').hide();
+			$('#bShieldInfo').hide();
+			$('#rShieldInfo').hide();
 		}
 
 		show() {
-			$('#shieldInfo').show();
+			$('#bShieldInfo').show();
+			$('#rShieldInfo').show();
 		}
 
-		setValue(secondsLeft, syncPlayer) {
-			if(!secondsLeft) {
+		setValue(secondsLeft, syncPlayer, flag) {
+			if (!secondsLeft) {
 				this.hide();
 				return;
 			}
 
-			const text = (syncPlayer !== null) ? `${secondsLeft} (${syncPlayer.name})` : secondsLeft;
-			$('#shieldInfo').text(text);
+			const text =
+				syncPlayer !== null
+					? `${secondsLeft} (${syncPlayer.name})`
+					: secondsLeft;
+			$(`#${flag}-shieldInfo`).text(text);
 			this.show();
 		}
 	}
@@ -212,11 +241,14 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		}
 
 		checkToStop(secondsLeft, _syncPlayer) {
-			if(secondsLeft === 0 || secondsLeft === false) this.stop();
+			if (secondsLeft === 0 || secondsLeft === false) this.stop();
 		}
 
 		countdown() {
-			SWAM.trigger('shieldTimer:enemyShield:update', [this.secondsLeft--, this.syncPlayer]);
+			SWAM.trigger('shieldTimer:enemyShield:update', [
+				this.secondsLeft--,
+				this.syncPlayer,
+			]);
 		}
 
 		restart() {
@@ -227,7 +259,7 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		start(options) {
 			this.stop();
 
-			const isSync = (!!options && !!options.player && !!options.secondsLeft);
+			const isSync = !!options && !!options.player && !!options.secondsLeft;
 
 			this.syncPlayer = isSync ? options.player : null;
 			this.secondsLeft = isSync ? options.secondsLeft : SHIELD.SPAWN_SECONDS;
@@ -239,7 +271,7 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		}
 
 		stop() {
-			if(this.intervalId) {
+			if (this.intervalId) {
 				clearInterval(this.intervalId);
 				this.intervalId = null;
 			}
@@ -277,29 +309,35 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 
 			const degrees = (180.0 / Math.PI) * theta;
 
-			const adjustedDegrees =  Math.floor((degrees / 45.0) + 0.5);
+			const adjustedDegrees = Math.floor(degrees / 45.0 + 0.5);
 			const bearings = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-			const bearing = bearings[(adjustedDegrees % 8)];
+			const bearing = bearings[adjustedDegrees % 8];
 
 			return bearing;
 		}
 
 		isShieldWithin(shieldPosition, boundingBox) {
 			return (
-				(shieldPosition.x >= boundingBox.topLeft.x) &&
-				(shieldPosition.y >= boundingBox.topLeft.y) &&
-				(shieldPosition.x <= boundingBox.bottomRight.x) &&
-				(shieldPosition.y <= boundingBox.bottomRight.y)
+				shieldPosition.x >= boundingBox.topLeft.x &&
+				shieldPosition.y >= boundingBox.topLeft.y &&
+				shieldPosition.x <= boundingBox.bottomRight.x &&
+				shieldPosition.y <= boundingBox.bottomRight.y
 			);
 		}
 
 		isEnemyBaseShield(shieldPosition, myTeam) {
-			switch(myTeam) {
+			switch (myTeam) {
 				case TEAMS.BLUE:
-					return this.isShieldWithin(shieldPosition, SHIELD.BASE_SPAWN_COORDINATES.RED);
+					return this.isShieldWithin(
+						shieldPosition,
+						SHIELD.BASE_SPAWN_COORDINATES.RED
+					);
 					break;
 				case TEAMS.RED:
-					return this.isShieldWithin(shieldPosition, SHIELD.BASE_SPAWN_COORDINATES.BLUE);
+					return this.isShieldWithin(
+						shieldPosition,
+						SHIELD.BASE_SPAWN_COORDINATES.BLUE
+					);
 					break;
 				default:
 					return false;
@@ -307,34 +345,45 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		}
 
 		shieldFoundForMob(data) {
-			if(data.type !== SHIELD.MOB_TYPE) return false;
+			if (data.type !== SHIELD.MOB_TYPE) return false;
 
 			const me = Players.getMe();
 			const shieldPosition = {
 				x: data.posX,
-				y: data.posY
+				y: data.posY,
 			};
 
-			const [x1, y1] = [AutoPilot.mapCoordX(me.pos.x), AutoPilot.mapCoordY(me.pos.y)];
-			const [x2, y2] = [AutoPilot.mapCoordX(shieldPosition.x), AutoPilot.mapCoordY(shieldPosition.y)];
+			const [x1, y1] = [
+				AutoPilot.mapCoordX(me.pos.x),
+				AutoPilot.mapCoordY(me.pos.y),
+			];
+			const [x2, y2] = [
+				AutoPilot.mapCoordX(shieldPosition.x),
+				AutoPilot.mapCoordY(shieldPosition.y),
+			];
 
 			const path = AutoPilot.SearchPath(x1, y1, x2, y2);
 
 			var lastPosition = me.pos;
 			var totalDistance = 0;
 
-			for(let i in path) {
+			for (let i in path) {
 				let nextX = path[i][0] * 100 - 16384 + 50;
 				let nextY = path[i][1] * 100 - 8192 + 50;
 
-				let distance = Tools.distance(lastPosition.x, lastPosition.y, nextX, nextY);
+				let distance = Tools.distance(
+					lastPosition.x,
+					lastPosition.y,
+					nextX,
+					nextY
+				);
 
 				totalDistance += distance;
 
 				lastPosition = {
 					x: nextX,
 					y: nextY,
-				}
+				};
 			}
 
 			const shield = Object.assign({}, shieldPosition, {
@@ -347,15 +396,16 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		}
 
 		shieldGone(objectType, data) {
-			if(!this.enabled) return false;
-			if(objectType === 'Mob' && data.type !== SHIELD.MOB_TYPE) return false;
-			if(objectType === 'Player' && data.type !== SHIELD.POWERUP_TYPE) return false;
+			if (!this.enabled) return false;
+			if (objectType === 'Mob' && data.type !== SHIELD.MOB_TYPE) return false;
+			if (objectType === 'Player' && data.type !== SHIELD.POWERUP_TYPE)
+				return false;
 
 			const me = Players.getMe();
-			const shieldPosition = (objectType === 'Player' ? me.pos : data.pos);
+			const shieldPosition = objectType === 'Player' ? me.pos : data.pos;
 			const isEnemyBaseShield = this.isEnemyBaseShield(shieldPosition, me.team);
 
-			if(isEnemyBaseShield) shieldMain.start();
+			if (isEnemyBaseShield) shieldMain.start();
 		}
 
 		shieldGoneForMob(data) {
@@ -393,14 +443,16 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		}
 
 		startSynced(player, secondsLeft) {
-			if(this.active) return;
+			if (this.active) return;
 
 			this.sync = true;
 
-			SWAM.trigger('shieldTimer:enemyShield:start', [{
-				player: player,
-				secondsLeft: secondsLeft,
-			}]);
+			SWAM.trigger('shieldTimer:enemyShield:start', [
+				{
+					player: player,
+					secondsLeft: secondsLeft,
+				},
+			]);
 		}
 
 		stop() {
@@ -412,7 +464,7 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 		}
 
 		toggle() {
-			if(this.active) {
+			if (this.active) {
 				this.stop();
 			} else {
 				this.start();
@@ -432,4 +484,4 @@ Thanks to Nuppet for original shield timer UI and idea. https://pastebin.com/01Z
 
 	// Register mod
 	SWAM.registerExtension(extensionConfig);
-}();
+})();
