@@ -44,7 +44,7 @@
 
 	function show(count) {
 		const el = $('#prowlers');
-		el.text(`${count} enemy prowler${count > 1 ? 's' : ''}'`);
+		el.text(`${count} enemy prowler${count > 1 ? 's' : ''}`);
 		el.show();
 	}
 	function hide() {
