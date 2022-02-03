@@ -12,7 +12,7 @@ Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/resp
 
 ### Respawn Hotkey
 
-Adds a hotkey (Shift-R) that's the equivalent of clicking on the ship you're using in the UI.
+Adds a hotkey (Shift-Y) that's the equivalent of clicking on the ship you're using in the UI.
 
 Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/prowlers.js`
 
