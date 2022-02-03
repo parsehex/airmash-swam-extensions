@@ -4,6 +4,18 @@ My [AirMash](https://airma.sh) extensions for [SWAM](https://github.com/Molesmal
 
 ## Extensions
 
+### Enemy Prowlers Alert
+
+Shows an alert when + how many there are prowlers on the enemies team (or if there are any prowlers at all in FFA). Useful for helicopters which do not have prowler radar to better inform.
+
+Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/respawn-hotkey.js`
+
+### Respawn Hotkey
+
+Adds a hotkey (Shift-R) that's the equivalent of clicking on the ship you're using in the UI.
+
+Install URL: `https://parsehex.github.io/airmash-swam-extensions/extensions/prowlers.js`
+
 ### Shield Timer
 
 Forked from [Detect's shield timer](https://github.com/Detect/swam_extensions#shield-timer-for-ctf-v15) and changed so that is shows for your own as well as enemy base.

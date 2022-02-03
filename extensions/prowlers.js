@@ -56,10 +56,9 @@
 	SWAM.on('gameLoaded', init);
 
 	SWAM.registerExtension({
-		name: 'Prowlers Playing',
+		name: 'Enemy Prowlers Alert',
 		id: 'prowlers-playing',
-		description:
-			"Simply informs you whether you're playing against any prowlers.",
+		description: "Informs you when you're playing against any prowlers.",
 		author: 'parsehex',
 		version: '1.0',
 	});
