@@ -1,38 +1,31 @@
-
 (function () {
+	/* VARIABLES */
 
-  /* VARIABLES */
+	const PI2 = Math.PI * 2;
 
-  const PI2 = Math.PI * 2;
+	let active = false,
+		prevAngle,
+		$laserPointer;
 
-  let active = false,
-      prevAngle,
-      $laserPointer;
+	/* INIT */
 
-  /* INIT */
+	function init() {
+		initHTML();
+		initStyle();
+		initGame();
+		initEvents();
+	}
 
-  function init () {
+	function initHTML() {
+		const html = '<div id="laser-pointer"></div>';
 
-    initHTML ();
-    initStyle ();
-    initGame ();
-    initEvents ();
+		$('body').append(html);
 
-  }
+		toggle(false);
+	}
 
-  function initHTML () {
-
-    const html = '<div id="laser-pointer"></div>';
-
-    $('body').append ( html );
-
-    toggle ( false );
-
-  }
-
-  function initStyle () {
-
-    const style = `
+	function initStyle() {
+		const style = `
       <style>
         #laser-pointer {
           display: block;
@@ -48,92 +41,80 @@
       </style>
     `;
 
-    $('head').append ( style );
+		$('head').append(style);
+	}
 
-  }
+	function initGame() {
+		$laserPointer = $('#laser-pointer');
 
-  function initGame () {
+		SWAM.on('playerAdded', (Player) => {
+			const proto = Object.getPrototypeOf(Player),
+				prev = proto.update;
 
-    $laserPointer = $('#laser-pointer');
+			proto.update = function (...args) {
+				prev.call(this, ...args);
 
-    SWAM.on ( 'playerAdded', Player => {
+				const me = Players.getMe();
 
-      const proto = Object.getPrototypeOf ( Player ),
-            prev = proto.update;
+				if (
+					me &&
+					(this.id === me.id ||
+						(this.id !== null && me.spectatingID === this.id))
+				) {
+					update(this.rot);
+				}
+			};
+		});
+	}
 
-      proto.update = function ( ...args ) {
+	function initEvents() {
+		SWAM.on('keydown', onKeydown);
+	}
 
-        prev.call ( this, ...args );
+	SWAM.on('gameLoaded', init);
 
-        const me = Players.getMe ();
+	/* EVENTS */
 
-        if ( me && this.id === me.id ) {
+	function onKeydown(event) {
+		if (event.originalEvent.key === 'p') {
+			//TODO: This should be customizable
 
-          update ( this.rot );
+			event.stopImmediatePropagation();
 
-        }
+			toggle(!active);
+		}
+	}
 
-      };
+	/* API */
 
-    });
+	function update(angle) {
+		if (!active) return;
 
-  }
+		if (angle === prevAngle) return;
 
-  function initEvents () {
+		const deg = (360 * angle) / PI2 - 90;
 
-    SWAM.on ( 'keydown', onKeydown );
+		$laserPointer[0].style.transform = `rotate(${deg}deg)`;
 
-  }
+		prevAngle = angle;
+	}
 
-  SWAM.on ( 'gameLoaded', init );
+	function toggle(force) {
+		active = force === undefined ? !active : force;
+		if (active) {
+			UI.show('#laser-pointer');
+		} else {
+			UI.hide('#laser-pointer');
+		}
+	}
 
-  /* EVENTS */
+	/* REGISTER */
 
-  function onKeydown ( event ) {
-
-    if ( event.originalEvent.key === 'p' ) { //TODO: This should be customizable
-
-      event.stopImmediatePropagation ();
-
-      toggle ( !active );
-
-    }
-
-  }
-
-  /* API */
-
-  function update ( angle ) {
-
-    if ( !active ) return;
-
-    if ( angle === prevAngle ) return;
-
-    const deg = ( 360 * angle / PI2 ) - 90;
-
-    $laserPointer[0].style.transform = `rotate(${deg}deg)`;
-
-    prevAngle = angle;
-
-  }
-
-  function toggle ( force ) {
-    active = force === undefined ? !active : force;
-    if ( active ) {
-      UI.show ( '#laser-pointer' );
-    } else {
-      UI.hide ( '#laser-pointer' );
-    }
-  }
-
-  /* REGISTER */
-
-  SWAM.registerExtension ({
-    name: 'Laser Pointer',
-    id: 'fabiospampinato.laserPointer',
-    description: 'Add a laser pointer to your spaceship!',
-    version: '1.0.0',
-    author: 'Fabio Spampinato'
-  });
-
-}());
+	SWAM.registerExtension({
+		name: 'Laser Pointer',
+		id: 'fabiospampinato.laserPointer',
+		description: 'Add a laser pointer to your spaceship!',
+		version: '1.0.0',
+		author: 'Fabio Spampinato',
+	});
+})();
